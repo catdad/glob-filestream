@@ -1,0 +1,15 @@
+{
+  "name": "glob-filestream",
+  "version": "0.0.1",
+  "description": "Reads a glob of files into a single stream",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Kiril Vatev <vatev.1@gmail.com>",
+  "license": "ISC",
+  "dependencies": {
+    "combined-stream": "^1.0.5",
+    "glob": "^7.0.3"
+  }
+}
