@@ -50,7 +50,7 @@ stream.on('end', function() {
 });
 ```
 
-Streams will be read and piped as-is, but sometimes, you may want to separate individual files with a new line. You can use the options for that, as such:
+Files will be read and piped as-is, but sometimes, you may want to separate individual files with a new line. You can use the options for that, as such:
 
 ```javascript
 var stream = globfile('*.txt', {
