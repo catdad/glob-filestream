@@ -1,6 +1,17 @@
 # glob-filestream
 
-[![Build Status](https://travis-ci.org/catdad/glob-filestream.svg?branch=master)](https://travis-ci.org/catdad/glob-filestream)
+[![Build][1]][2] [![Downloads][7]][8] [![Version][9]][8] [![ISC License][10]][11]
+
+[1]: https://travis-ci.org/catdad/glob-filestream.svg?branch=master
+[2]: https://travis-ci.org/catdad/glob-filestream
+
+[7]: https://img.shields.io/npm/dm/glob-filestream.svg
+[8]: https://www.npmjs.com/package/glob-filestream
+
+[9]: https://img.shields.io/npm/v/glob-filestream.svg
+
+[10]: https://img.shields.io/npm/l/glob-filestream.svg
+[11]: http://opensource.org/licenses/ISC
 
 Reads a glob of files into a single stream.
 
@@ -29,3 +40,7 @@ stream.on('end', function() {
     console.log(Buffer.concat(data).toString());
 });
 ```
+
+## License
+
+[ISC](http://opensource.org/licenses/ISC)
