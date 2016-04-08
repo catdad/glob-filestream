@@ -37,7 +37,7 @@ var globfile = require('blob-filestream');
 
 var stream = globfile('*.txt');
 
-// read like it was a regular filestream
+// read like a regular filestream
 
 var data = [];
 
