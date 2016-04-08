@@ -4,7 +4,8 @@
   "description": "Reads a glob of files into a single stream",
   "main": "index.js",
   "scripts": {
-    "test": "mocha test/**/*.test.js -R spec"
+    "test": "mocha test/**/*.test.js -R spec",
+    "coverage": "istanbul cover --dir coverage node_modules/mocha/bin/_mocha"
   },
   "author": "Kiril Vatev <vatev.1@gmail.com>",
   "license": "ISC",
@@ -15,7 +16,9 @@
   },
   "devDependencies": {
     "chai": "^3.5.0",
+    "codeclimate-test-reporter": "^0.3.1",
     "event-stream": "^3.3.2",
+    "istanbul": "^0.4.3",
     "mocha": "^2.4.5"
   },
   "repository": {
