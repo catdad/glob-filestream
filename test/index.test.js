@@ -37,5 +37,16 @@ describe('[GlobStream]', function() {
     
     });
     
+    it('handles file read errors');
+    
+    it('ends when no data are matches', function(done) {
+        var stream = globStream('fixtures/not.txt');
+
+        stream.pipe(es.wait(function(err, data) {
+            expect(data.toString()).to.equal('');
+            done();
+        }));
+    });
+    
     it('allows for placing a newline between files');
 });
