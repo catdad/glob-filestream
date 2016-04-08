@@ -48,5 +48,14 @@ describe('[GlobStream]', function() {
         }));
     });
     
-    it('allows for placing a newline between files');
+    it('allows for placing a newline between files', function(done) {
+        var stream = globStream('fixtures/*.txt', {
+            appendNewLine: true
+        });
+        
+        stream.pipe(es.wait(function(err, data) {
+            expect(data.toString()).to.equal('one\ntwo\n');
+            done();
+        }));
+    });
 });
