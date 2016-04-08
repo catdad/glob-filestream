@@ -3,8 +3,6 @@
 var expect = require('chai').expect;
 var es = require('event-stream');
 
-var s = require('stream');
-
 var globStream = require('../index');
 
 describe('[GlobStream]', function() {
@@ -34,7 +32,6 @@ describe('[GlobStream]', function() {
             expect(data.toString()).to.equal('onetwo');
             done();
         }));
-    
     });
     
     it('handles file read errors');
