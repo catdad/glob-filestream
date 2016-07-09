@@ -38,10 +38,17 @@ function buildStreams(files, appendNewLine) {
     var temp;
     
     files.forEach(function(file) {
-        streams.push(fs.createReadStream(file));
+        // instead of opening all files at once,
+        // we will wait and open them one at a time
+        // as they are ready to be read
+        streams.push(function() {
+            return fs.createReadStream(file);
+        });
         
         if (appendNewLine) {
-            streams.push(newLineStream());
+            streams.push(function() {
+                return newLineStream();
+            });
         }
     });
     
@@ -56,7 +63,13 @@ module.exports = function globStream(glob, options) {
     globby(glob, opts.globOptions).then(function(files) {
         if (files.length) {
             var streams = buildStreams(files, opts.gsOptions.appendNewLine);
-            multistream(streams).pipe(output);
+            multistream(streams).on('error', function() {
+                // multistream will already handle errors from all
+                // of the streams it combines, so here, we will
+                // re-emit the error on the actual output stream
+                var args = [].slice.call(arguments);
+                output.emit.apply(output, ['error'].concat(args));
+            }).pipe(output);
         } else {
             output.end();
         }

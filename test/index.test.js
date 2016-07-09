@@ -2,6 +2,7 @@
 
 var expect = require('chai').expect;
 var es = require('event-stream');
+var through = require('through2');
 var mock = require('mock-fs');
 
 var globStream = require('../index');
@@ -82,6 +83,32 @@ describe('[GlobStream]', function() {
         });
         
         runPositiveTests();
+        
+        it('handles file read errors when reading a single file', function(done) {
+            var stream = globStream('errors/perm.txt');
+
+            stream.on('error', function(err) {
+                expect(err).to.have.property('code').and.to.equal('EACCES');
+                done();
+            });
+            stream.on('end', function() {
+                throw new Error('out stream should not end in this test');
+            });
+        });
+        
+        it('handles file read errors when reading multiple files', function(done) {
+            var stream = globStream('errors/*.txt', {
+                appendNewLine: true
+            });
+
+            stream.on('error', function(err) {
+                expect(err).to.have.property('code').and.to.equal('EACCES');
+                done();
+            });
+            stream.on('end', function() {
+                throw new Error('out stream should not end in this test');
+            });
+        });
     });
     
 });
