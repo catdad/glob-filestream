@@ -82,6 +82,8 @@ describe('[GlobStream]', function() {
             mock.restore();
         });
         
+        var noop = function() {};
+        
         runPositiveTests();
         
         it('handles file read errors when reading a single file', function(done) {
@@ -91,6 +93,7 @@ describe('[GlobStream]', function() {
                 expect(err).to.have.property('code').and.to.equal('EACCES');
                 done();
             });
+            stream.on('data', noop);
             stream.on('end', function() {
                 throw new Error('out stream should not end in this test');
             });
@@ -103,6 +106,20 @@ describe('[GlobStream]', function() {
 
             stream.on('error', function(err) {
                 expect(err).to.have.property('code').and.to.equal('EACCES');
+                done();
+            });
+            stream.on('data', noop);
+            stream.on('end', function() {
+                throw new Error('out stream should not end in this test');
+            });
+        });
+        
+        it.skip('emits an error if the glob parameters are incorrect', function(done) {
+            var stream = globStream([null]);
+            
+            stream.on('data', noop);
+            stream.on('error', function(err) {
+                expect(err).to.be.an('error');
                 done();
             });
             stream.on('end', function() {
