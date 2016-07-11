@@ -61,18 +61,18 @@ module.exports = function globStream(glob, options) {
     var opts = parseOptions(options);
     
     globby(glob, opts.globOptions).then(function(files) {
-        if (files.length) {
-            var streams = buildStreams(files, opts.gsOptions.appendNewLine);
-            multistream(streams).on('error', function() {
-                // multistream will already handle errors from all
-                // of the streams it combines, so here, we will
-                // re-emit the error on the actual output stream
-                var args = [].slice.call(arguments);
-                output.emit.apply(output, ['error'].concat(args));
-            }).pipe(output);
-        } else {
-            output.end();
+        if (!files.length) {
+            return output.end();
         }
+        
+        var streams = buildStreams(files, opts.gsOptions.appendNewLine);
+        multistream(streams).on('error', function() {
+            // multistream will already handle errors from all
+            // of the streams it combines, so here, we will
+            // re-emit the error on the actual output stream
+            var args = [].slice.call(arguments);
+            output.emit.apply(output, ['error'].concat(args));
+        }).pipe(output);
     }).catch(function(err) {
         output.emit(err);
     });
