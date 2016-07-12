@@ -57,6 +57,28 @@ describe('[GlobStream]', function() {
                 done();
             }));
         });
+        
+        it('can transform the stream with an optional parameter', function(done) {
+            function transform(stream) {
+                var out = through();
+                
+                setImmediate(function() {
+                    out.write('not ');
+                    stream.pipe(out);
+                });
+                
+                return out;
+            }
+            
+            var stream = globStream('fixtures/one.txt', {
+                transform: transform
+            });
+            
+            stream.pipe(es.wait(function(err, data) {
+                expect(data.toString()).to.equal('not one');
+                done();
+            }));
+        });
     
     }
     

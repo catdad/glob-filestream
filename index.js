@@ -16,6 +16,11 @@ function parseOptions(options) {
         delete options.appendNewLine;
     }
     
+    if (options.transform && options.transform instanceof Function) {
+        gsOptions.transform = options.transform;
+        delete options.transform;
+    }
+    
     return {
         globOptions: options,
         gsOptions: gsOptions
@@ -33,7 +38,7 @@ function newLineStream() {
     return temp;
 }
 
-function buildStreams(files, appendNewLine) {
+function buildStreams(files, opts) {
     var streams = [];
     var temp;
     
@@ -42,10 +47,16 @@ function buildStreams(files, appendNewLine) {
         // we will wait and open them one at a time
         // as they are ready to be read
         streams.push(function() {
-            return fs.createReadStream(file);
+            if (opts.transform) {
+                return opts.transform(
+                    fs.createReadStream(file)
+                );
+            } else {
+                return fs.createReadStream(file);
+            }
         });
         
-        if (appendNewLine) {
+        if (opts.appendNewLine) {
             streams.push(function() {
                 return newLineStream();
             });
@@ -65,7 +76,7 @@ module.exports = function globStream(glob, options) {
             return output.end();
         }
         
-        var streams = buildStreams(files, opts.gsOptions.appendNewLine);
+        var streams = buildStreams(files, opts.gsOptions);
         multistream(streams).on('error', function() {
             // multistream will already handle errors from all
             // of the streams it combines, so here, we will
