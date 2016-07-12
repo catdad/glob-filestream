@@ -19,9 +19,6 @@
 [10]: https://img.shields.io/npm/l/glob-filestream.svg
 [11]: http://opensource.org/licenses/ISC
 
-
-
-
 Reads a glob of files into a single stream.
 
 ## Install
@@ -33,7 +30,7 @@ Reads a glob of files into a single stream.
 Pass in a glob or array of globs, and get all of the matched content in one stream.
 
 ```javascript
-var globfile = require('blob-filestream');
+var globfile = require('glob-filestream');
 
 var stream = globfile('*.txt');
 
@@ -56,6 +53,27 @@ Files will be read and piped as-is, but sometimes, you may want to separate indi
 var stream = globfile('*.txt', {
     appendNewLine: true
 });
+```
+
+Every once in a while, you might find the need to transform individual files as you read them. There is an option for that as well.
+
+```javascript
+var globfile = require('glob-filestream');
+var ensureGunzip = require('ensure-gunzip');
+
+var stream = globfile(['*.txt.gzip', '*.txt'], {
+    transform: ensureGunzip
+});
+
+// read `stream`, containing all plain text files
+```
+
+Transform is a function that takes a `stream` as a parameter and returns a new stream. The identify transform function would look like this:
+
+```javascript
+function transform(stream) {
+    return stream;
+}
 ```
 
 ## License
