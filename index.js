@@ -85,7 +85,7 @@ module.exports = function globStream(glob, options) {
             output.emit.apply(output, ['error'].concat(args));
         }).pipe(output);
     }).catch(function(err) {
-        output.emit(err);
+        output.emit('error', err);
     });
     
     return output;

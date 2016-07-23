@@ -136,12 +136,12 @@ describe('[GlobStream]', function() {
             });
         });
         
-        it.skip('emits an error if the glob parameters are incorrect', function(done) {
+        it('emits an error if the glob parameters are incorrect', function(done) {
             var stream = globStream([null]);
             
             stream.on('data', noop);
             stream.on('error', function(err) {
-                expect(err).to.be.an('error');
+                expect(err).to.be.instanceOf(TypeError);
                 done();
             });
             stream.on('end', function() {
