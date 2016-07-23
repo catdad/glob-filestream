@@ -1,6 +1,12 @@
 # glob-filestream
 
-[![Build][1]][2] [![Test Coverage][3]][4] [![Code Climate][5]][6] [![Downloads][7]][8] [![Version][9]][8] [![ISC License][10]][11]
+[![Build][1]][2]
+[![Test Coverage][3]][4]
+[![Code Climate][5]][6]
+[![Downloads][7]][8]
+[![Version][9]][8]
+[![Dependency Status][10]][11]
+[![ISC License][12]][13]
 
 [1]: https://travis-ci.org/catdad/glob-filestream.svg?branch=master
 [2]: https://travis-ci.org/catdad/glob-filestream
@@ -13,11 +19,13 @@
 
 [7]: https://img.shields.io/npm/dm/glob-filestream.svg
 [8]: https://www.npmjs.com/package/glob-filestream
-
 [9]: https://img.shields.io/npm/v/glob-filestream.svg
 
-[10]: https://img.shields.io/npm/l/glob-filestream.svg
-[11]: http://opensource.org/licenses/ISC
+[10]: https://david-dm.org/catdad/glob-filestream.svg
+[11]: https://david-dm.org/catdad/glob-filestream
+
+[12]: https://img.shields.io/npm/l/glob-filestream.svg
+[13]: http://opensource.org/licenses/ISC
 
 Reads a glob of files into a single stream.
 
