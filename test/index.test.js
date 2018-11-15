@@ -3,7 +3,10 @@
 var expect = require('chai').expect;
 var es = require('event-stream');
 var through = require('through2');
-var mock = require('mock-fs');
+var mock = /^v0\.12\../.test(process.version) ?
+    // this is a fork of v3.12.1
+    require('mock-fs-require-fix') :
+    require('mock-fs');
 
 var globStream = require('../index');
 
