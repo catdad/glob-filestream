@@ -1,17 +1,36 @@
 language: node_js
+
 node_js:
-  - "node"
-  - "10"
-  - "8"
-  - "6"
-  - "4"
+  - 'node'
+  - '10'
+  - '8'
+  - '6'
+  - '4'
   # keep for weird Buffer behavior testing
-  - "4.2"
-  - "0.12"
-  - "iojs"
+  - '4.2'
+  - '0.12'
+  - 'iojs'
+
 addons:
   code_climate:
     repo_token: 87721cacbe17adea964acc0b042045642028dd38dec212e6ba7d74b0ac4edeeb
+
 after_script:
   - npm run coverage
   - codeclimate-test-reporter < coverage/lcov.info
+
+jobs:
+  include:
+    - stage: npm release
+      node_js: '8'
+      if: tag IS present
+      script: echo "Deploying to npm ..."
+      after_script: skip
+      deploy:
+        provider: npm
+        email: vatev.1+npm@gmail.com
+        api_key:
+          secure: oINrB9cssfa259TlMu54r38prabjWEGYXBNJ8vXQ/xzEC8fbglVxNDThlqsn/nzysCgXKBi8he6KYhCIzcNHXOCtWJ+iGG3mS/a7wGaEMav48WZIGY82hxOec9B700h8UEnECopN1MxRZ3dmuZgvzj7mCC6wy5VcVamtOLPktrVngPwbREpJ0pmnt4cuogcZFy9//SMClQmtmmwrbKVbA7I6TzORA7miioa2ENYXkl4wf8vt6Rr0lWaBs0KaAiMAByIeNSvJyGVlqzz6C42c03yNupGz0p412mZZtGCevockIf+C8o3+kidMAyhUibBR9Hn9PX5rDcSe0a8XyGfPo/q/alGfmAHq0UsMBkeeWwtZ4ORMdWDlZr1J07T8G4POzP7mdL5y5eMjw2mK7jyTKQlFDUaD3w6qZyu9242aaDQ3ZXslTjwDX9JCPQmdkPkjdl+YZbs6Lc3UecnBPFvqaz4tBumw6qXwE3oEcWQVzpRaHXHh2w05arNyFi1GIo5SozIS1O7CP0KZKkiNwZ8IJr9pieNzfRTRp/47T5C+PTn+5sGgMd4BTrL2qEzXITxL889N1SSp7zJRC+S4G0rRtf4YzDOiV+j0a3L9MEbQDnKFsDZQkznX8y7iPqJsK9/d45GQCLK3l8WqA8P5dsACOUDQzv9s10yXYkjMR8cnd5Q=
+        on:
+          tags: true
+          repo: catdad/glob-filestream
