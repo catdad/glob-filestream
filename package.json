@@ -1,6 +1,6 @@
 {
   "name": "glob-filestream",
-  "version": "0.3.1",
+  "version": "0.3.2",
   "description": "Reads a glob of files into a single stream",
   "main": "index.js",
   "scripts": {
