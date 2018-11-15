@@ -3,7 +3,10 @@
 var expect = require('chai').expect;
 var es = require('event-stream');
 var through = require('through2');
-var mock = require('mock-fs');
+var mock = /^v[0123]\.\d+\.\d+$/.test(process.version) ?
+    // this is a fork of v3.12.1
+    require('mock-fs-require-fix') :
+    require('mock-fs');
 
 var globStream = require('../index');
 
@@ -87,14 +90,23 @@ describe('[GlobStream]', function() {
     });
     
     describe('using mock files:', function() {
+        // mock-fs does not correctly handle weird buffer creation
+        // differences in node >4.0.0 <4.5.0
+        function buffer(str) {
+            try {
+                return Buffer.from(str);
+            } catch(e) {
+                return new Buffer(str);
+            }
+        }
         
         beforeEach(function() {
             mock({
-                'fixtures/one.txt': 'one',
-                'fixtures/two.txt': 'two',
-                'errors/none.txt': 'none',
+                'fixtures/one.txt': buffer('one'),
+                'fixtures/two.txt': buffer('two'),
+                'errors/none.txt': buffer('none'),
                 'errors/perm.txt': mock.file({
-                    content: 'secrets',
+                    content: buffer('secrets'),
                     mode: 0111
                 })
             });

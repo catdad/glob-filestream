@@ -1,11 +1,14 @@
 language: node_js
 node_js:
-  - "5.3"
+  - "node"
+  - "10"
+  - "8"
+  - "6"
+  - "4"
+  # keep for weird Buffer behavior testing
   - "4.2"
-  - "4.0"
   - "0.12"
   - "iojs"
-  - "node"
 addons:
   code_climate:
     repo_token: 87721cacbe17adea964acc0b042045642028dd38dec212e6ba7d74b0ac4edeeb
