@@ -87,14 +87,21 @@ describe('[GlobStream]', function() {
     });
     
     describe('using mock files:', function() {
+        function buffer(str) {
+            try {
+                return Buffer.from(str);
+            } catch(e) {
+                return new Buffer(str);
+            }
+        }
         
         beforeEach(function() {
             mock({
-                'fixtures/one.txt': 'one',
-                'fixtures/two.txt': 'two',
-                'errors/none.txt': 'none',
+                'fixtures/one.txt': buffer('one'),
+                'fixtures/two.txt': buffer('two'),
+                'errors/none.txt': buffer('none'),
                 'errors/perm.txt': mock.file({
-                    content: 'secrets',
+                    content: buffer('secrets'),
                     mode: 0111
                 })
             });
